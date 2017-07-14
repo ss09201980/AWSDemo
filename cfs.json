@@ -1,11 +1,11 @@
-"Ec2Instance" :{
-   "Type" : "AWS::EC2::Instance",
-   "Properties" : {
-      "AvailabilityZone" : "us-east-1",
-      "ImageId" : "ami-a4c7edb2",
-      "InstanceInitiatedShutdownBehavior" : "stop",
-      "InstanceType" : "t2.micro",
-      "KeyName" : "ec2keypair",
-      "SecurityGroupIds" : [ "sg-7a364b0b" ]
-   }
-}
+Type: "AWS::EC2::Instance"
+Properties: 
+  AvailabilityZone: us-east-1
+  ImageId: ami-a4c7edb2
+  InstanceInitiatedShutdownBehavior: Stop
+  InstanceType: t2.micro
+  KeyName: ec2keypair
+  Monitoring: False
+  SecurityGroupIds: 
+    sg-7a364b0b
+  
