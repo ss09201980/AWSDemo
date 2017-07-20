@@ -7,7 +7,11 @@ scripts to install the packages and files necessary to deploy the Apache web ser
 **WARNING** This template creates an Amazon EC2 instance. You will be billed for the AWS resources used if you create a stack from this template.",
 
   "Parameters" : {
-    "KeyName": "ec2keypair",  
+    "KeyName": {
+      "Description" : "Name of an existing EC2 KeyPair to enable SSH access to the instance",
+      "Type": "AWS::EC2::KeyPair::KeyName",
+      "ConstraintDescription" : "Can contain only ASCII characters."
+    },  
     "InstanceType" : {
       "Description" : "WebServer EC2 instance type",
       "Type" : "String",
@@ -92,7 +96,17 @@ scripts to install the packages and files necessary to deploy the Apache web ser
         "KeyName"        : { "Ref" : "KeyName" }
       }
     },
-    "WebServerSecurityGroup" : "sg-7a364b0b",
+    "WebServerSecurityGroup" : {
+      "Type" : "AWS::EC2::SecurityGroup",
+      "Properties" : {
+        "GroupDescription" : "Enable HTTP access via port 80",
+        "SecurityGroupIngress" : [
+          {"IpProtocol" : "tcp", "FromPort" : "80", "ToPort" : "80", "CidrIp" : "0.0.0.0/0"},
+          {"IpProtocol" : "tcp", "FromPort" : "22", "ToPort" : "22", "CidrIp" : { "Ref" : "SSHLocation"}}
+        ]
+      }
+    }
+  },
 
   "Outputs" : {
     "WebsiteURL" : {
