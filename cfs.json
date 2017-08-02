@@ -12,7 +12,7 @@ scripts to install the packages and files necessary to deploy the Apache web ser
       "Type": "AWS::EC2::KeyPair::KeyName",
       "ConstraintDescription" : "Can contain only ASCII characters."
     },  
-    "InstanceType" : {
+    "EC2InstanceType" : {
       "Description" : "WebServer EC2 instance type",
       "Type" : "String",
       "Default" : "t2.micro",
@@ -91,12 +91,12 @@ scripts to install the packages and files necessary to deploy the Apache web ser
       "Properties": {
         "ImageId" : { "Fn::FindInMap" : [ "AWSRegionArch2AMI", { "Ref" : "AWS::Region" },
                           { "Fn::FindInMap" : [ "AWSInstanceType2Arch", { "Ref" : "InstanceType" }, "Arch" ] } ] },
-        "InstanceType"   : { "Ref" : "InstanceType" },
-        "SecurityGroups" : [ {"Ref" : "WebServerSecurityGroup"} ],
+        "InstanceType"   : { "Ref" : "EC2InstanceType`" },
+        "SecurityGroups" : [ {"Ref" : "EC2SecurityGroup"} ],
         "KeyName"        : { "Ref" : "KeyName" }
       }
     },
-    "WebServerSecurityGroup" : {
+    "EC2SecurityGroup" : {
       "Type" : "AWS::EC2::SecurityGroup",
       "Properties" : {
         "GroupDescription" : "Enable HTTP access via port 80",
